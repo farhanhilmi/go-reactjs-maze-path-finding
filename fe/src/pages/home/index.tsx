@@ -1,6 +1,8 @@
 // Maze.tsx
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { MazeProps } from '../../../shared/types';
 
 const START = '-';
 const PATH = '*';
@@ -10,7 +12,7 @@ const EXIT = '+';
 // const EXITCOLOR = '#F00';
 
 const mazeData = [
-    [START, PATH, WALL, PATH, WALL, WALL, PATH, WALL, PATH, EXIT],
+    [START, PATH, WALL, PATH, WALL, WALL, PATH, WALL, PATH, PATH],
     [WALL, PATH, WALL, PATH, PATH, PATH, PATH, PATH, WALL, PATH],
     [PATH, PATH, PATH, WALL, PATH, WALL, PATH, WALL, PATH, PATH],
     [PATH, WALL, PATH, WALL, PATH, WALL, PATH, WALL, PATH, WALL],
@@ -20,9 +22,6 @@ const mazeData = [
     [PATH, PATH, WALL, PATH, WALL, WALL, WALL, WALL, PATH, WALL],
     [PATH, WALL, WALL, PATH, PATH, PATH, PATH, WALL, PATH, WALL],
 ];
-interface MazeProps {
-    mazeData: string[][];
-}
 
 const Maze: React.FC<MazeProps> = ({ mazeData }) => {
     const [pathCoordinates, setPathCoordinates] = useState<
@@ -57,6 +56,14 @@ const Maze: React.FC<MazeProps> = ({ mazeData }) => {
 
     return (
         <>
+            <div className="mb-4">
+                <Link
+                    to={'/maze/create'}
+                    className="bg-purple-400 py-2 px-4 rounded-xl text-white font-medium"
+                >
+                    Create new maze
+                </Link>
+            </div>
             <div
                 style={{
                     display: 'grid',

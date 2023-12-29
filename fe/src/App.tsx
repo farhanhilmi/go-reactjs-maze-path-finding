@@ -1,16 +1,16 @@
-import { useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
+import CreateMaze from './pages/generator/createmaze';
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
-        <div className="min-h-screen flex justify-center items-center">
+        <div className="min-h-screen">
+            {/* <div className="min-h-screen flex justify-center items-center"> */}
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/maze/create" element={<CreateMaze />} />
                 </Routes>
             </BrowserRouter>
         </div>
