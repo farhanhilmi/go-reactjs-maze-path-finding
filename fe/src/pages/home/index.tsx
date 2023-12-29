@@ -37,8 +37,19 @@ const Maze: React.FC<MazeProps> = ({ mazeData }) => {
                 body: JSON.stringify({ maze: mazeData }),
             });
             const data = await response.json();
+            const path = data.path;
 
-            setPathCoordinates(data.path);
+            // Clear path coordinates
+            setPathCoordinates([]);
+
+            // Visualize the pathfinding process with a delay
+            for (let i = 0; i < path.length; i++) {
+                await new Promise((resolve) => setTimeout(resolve, 150));
+                setPathCoordinates((prevCoordinates) => [
+                    ...prevCoordinates,
+                    path[i],
+                ]);
+            }
         } catch (error) {
             console.error('Error fetching path:', error);
         }
@@ -85,6 +96,7 @@ const Maze: React.FC<MazeProps> = ({ mazeData }) => {
                                         height: '4px',
                                         background: 'blue',
                                         transform: 'translate(-50%, -50%)',
+                                        // animation: 'fadeIn 0.5s ease-out',
                                     }}
                                 ></div>
                             )}
