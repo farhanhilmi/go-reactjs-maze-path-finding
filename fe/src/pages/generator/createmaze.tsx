@@ -12,6 +12,10 @@ export default function CreateMaze() {
     const [xAxis, setXAxis] = useState(0);
     const [yAxis, setYAxis] = useState(0);
     const [mazeData, setMazeData] = useState<string[][]>([]);
+    const [isAddingWall, setIsAddingWall] = useState(false);
+    const [isAddingStart, setIsAddingStart] = useState(false);
+    const [isAddingExit, setIsAddingExit] = useState(false);
+    const [actionType, setActionType] = useState('');
 
     const buildMaze = () => {
         console.log('buildMaze');
@@ -28,6 +32,43 @@ export default function CreateMaze() {
         setMazeData(maze);
     };
     console.log('mazeData', mazeData);
+
+    const handleAddWallClick = () => {
+        setIsAddingWall(!isAddingWall);
+        setActionType(WALL);
+    };
+
+    const handleAddStartClick = () => {
+        setIsAddingStart(!isAddingStart);
+        setActionType(START);
+    };
+
+    const handleAddExitClick = () => {
+        setIsAddingExit(!isAddingExit);
+        setActionType(EXIT);
+    };
+
+    const handleCellClick = (
+        actionType: string,
+        rowIndex: number,
+        columnIndex: number,
+    ) => {
+        if (actionType === WALL && isAddingWall) {
+            const updatedMaze = [...mazeData];
+            updatedMaze[rowIndex][columnIndex] = WALL;
+            setMazeData(updatedMaze);
+        }
+        if (actionType === START && isAddingStart) {
+            const updatedMaze = [...mazeData];
+            updatedMaze[rowIndex][columnIndex] = START;
+            setMazeData(updatedMaze);
+        }
+        if (actionType === EXIT && isAddingExit) {
+            const updatedMaze = [...mazeData];
+            updatedMaze[rowIndex][columnIndex] = EXIT;
+            setMazeData(updatedMaze);
+        }
+    };
 
     return (
         <>
@@ -68,9 +109,44 @@ export default function CreateMaze() {
             {mazeData.length > 0 && (
                 <div className="mt-8">
                     <div className="flex flex-col ">
-                        <button>Add Wall</button>
-                        <button>Add Start Point</button>
-                        <button>Add Exit Point</button>
+                        <button
+                            onClick={handleAddWallClick}
+                            disabled={isAddingStart || isAddingExit}
+                            className={`${
+                                isAddingWall ? 'bg-blue-500' : 'bg-green-500'
+                            } text-white px-4 py-2 rounded ${
+                                (isAddingStart || isAddingExit) &&
+                                'opacity-50 cursor-not-allowed'
+                            }`}
+                        >
+                            {isAddingWall ? 'Finish Adding Wall' : 'Add Wall'}
+                        </button>
+                        <button
+                            onClick={handleAddStartClick}
+                            disabled={isAddingWall || isAddingExit}
+                            className={`${
+                                isAddingStart ? 'bg-blue-500' : 'bg-green-500'
+                            } text-white px-4 py-2 rounded ${
+                                (isAddingWall || isAddingExit) &&
+                                'opacity-50 cursor-not-allowed'
+                            }`}
+                        >
+                            {isAddingStart
+                                ? 'Finish Adding Start'
+                                : 'Add Start'}
+                        </button>
+                        <button
+                            onClick={handleAddExitClick}
+                            disabled={isAddingWall || isAddingStart}
+                            className={`${
+                                isAddingExit ? 'bg-blue-500' : 'bg-green-500'
+                            } text-white px-4 py-2 rounded ${
+                                (isAddingWall || isAddingStart) &&
+                                'opacity-50 cursor-not-allowed'
+                            }`}
+                        >
+                            {isAddingExit ? 'Finish Adding Exit' : 'Add Exit'}
+                        </button>
                     </div>
                     <div
                         style={{
@@ -97,6 +173,13 @@ export default function CreateMaze() {
                                                 : 'white',
                                         position: 'relative',
                                     }}
+                                    onClick={() =>
+                                        handleCellClick(
+                                            actionType,
+                                            rowIndex,
+                                            columnIndex,
+                                        )
+                                    }
                                 >
                                     {/* Render path line in the cell if it's part of the pathCoordinates */}
                                     {/* {pathCoordinates.find(
