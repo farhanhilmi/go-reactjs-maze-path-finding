@@ -16,6 +16,8 @@ export default function CreateMaze() {
     const [isAddingStart, setIsAddingStart] = useState(false);
     const [isAddingExit, setIsAddingExit] = useState(false);
     const [actionType, setActionType] = useState('');
+    const [countStartPoint, setCountStartPoint] = useState(0);
+    const [countExitPoint, setCountExitPoint] = useState(0);
 
     const buildMaze = () => {
         console.log('buildMaze');
@@ -61,11 +63,13 @@ export default function CreateMaze() {
         if (actionType === START && isAddingStart) {
             const updatedMaze = [...mazeData];
             updatedMaze[rowIndex][columnIndex] = START;
+            setCountStartPoint(countStartPoint + 1);
             setMazeData(updatedMaze);
         }
         if (actionType === EXIT && isAddingExit) {
             const updatedMaze = [...mazeData];
             updatedMaze[rowIndex][columnIndex] = EXIT;
+            setCountExitPoint(countExitPoint + 1);
             setMazeData(updatedMaze);
         }
     };
