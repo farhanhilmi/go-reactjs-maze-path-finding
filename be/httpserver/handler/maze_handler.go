@@ -5,6 +5,7 @@ import (
 
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/dto"
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/usecase"
+	"github.com/farhanhilmi/go-reactjs-maze-path-finding/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +22,7 @@ func (h *MazeHandler) FindPath(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		// c.Error(util.ErrInvalidInput)
+		c.Error(util.ErrInvalidInput)
 		return
 	}
 
