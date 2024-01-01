@@ -4,18 +4,22 @@ interface PathFinding {
 
 export const GetMazePath = async ({ maze }: PathFinding) => {
     try {
-        const response = await fetch('http://localhost:8080/findPath', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ maze: maze }),
-        });
+        const response = await fetch(
+            'http://localhost:8080/mazes/finding-path',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ maze: maze }),
+            },
+        );
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
-        const path = data.path;
+        const path = data.data;
+        console.log('PATH RESPONSE', path);
 
         return path;
     } catch (error) {
