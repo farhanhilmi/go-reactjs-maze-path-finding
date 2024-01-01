@@ -1,5 +1,5 @@
 package dto
 
 type FindPathRequest struct {
-	Maze [][]int `json:"maze" binding:"required"`
+	Maze Maze `json:"maze" binding:"required"`
 }
