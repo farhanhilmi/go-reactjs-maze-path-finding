@@ -7,17 +7,17 @@ function App() {
     return (
         <div
             id="full-background"
-            className="flex justify-center items-center min-h-screen p-8 bg-gradient-to-tr from-blue-500 to-purple-500"
+            className="min-h-screen p-8 bg-gradient-to-tr from-blue-500 to-purple-500"
         >
-            <div className="max-w-[1280px]">
-                {/* <div className="min-h-screen flex justify-center items-center"> */}
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/maze/create" element={<CreateMaze />} />
-                    </Routes>
-                </BrowserRouter>
-            </div>
+            {/* <div className="max-w-[1280px]"> */}
+            {/* <div className="min-h-screen flex justify-center items-center"> */}
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/maze/create" element={<CreateMaze />} />
+                </Routes>
+            </BrowserRouter>
+            {/* </div> */}
         </div>
         // <div className="min-h-screen flex justify-center items-center">
         //     <h1 className="text-3xl font-bold text-blue-400">

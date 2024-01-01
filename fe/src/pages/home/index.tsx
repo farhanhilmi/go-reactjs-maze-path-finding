@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MazeProps } from '../../../shared/types';
 import { Button } from '../../components/Button';
+import { GetMazePath } from '../../../shared/utils/maze';
+import { MazeBox } from '../../components/MazeBox';
 
 const START = '-';
 const PATH = '*';
@@ -131,13 +133,7 @@ const Maze: React.FC<MazeProps> = () => {
 
     const handlePathfinding = async () => {
         try {
-            const response = await fetch('http://localhost:8080/findPath', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ maze: maze }),
-            });
-            const data = await response.json();
-            const path = data.path;
+            const path = await GetMazePath({ maze });
 
             // Clear path coordinates
             setPathCoordinates([]);
@@ -167,8 +163,8 @@ const Maze: React.FC<MazeProps> = () => {
     };
 
     return (
-        <>
-            <div className="grid grid-cols-2">
+        <div className="flex justify-center items-center ">
+            <div className="grid grid-cols-2 ">
                 <div>
                     <div className="mb-4">
                         <Link
@@ -229,31 +225,20 @@ const Maze: React.FC<MazeProps> = () => {
                                         ({ X, Y }) =>
                                             X === columnIndex && Y === rowIndex,
                                     ) && (
-                                        <div
-                                            style={{
-                                                position: 'absolute',
-                                                top: '50%',
-                                                left: '50%',
-                                                width: '8px',
-                                                height: '8px',
-                                                background: '#60a5fa',
-                                                transform:
-                                                    'translate(-50%, -50%)',
-                                            }}
-                                        ></div>
+                                        <MazeBox
+                                            cell={cell}
+                                            columnIndex={columnIndex}
+                                            isDrawing={true}
+                                            pathCoordinates={pathCoordinates}
+                                            rowIndex={rowIndex}
+                                            key={`${rowIndex}-${columnIndex}`}
+                                        />
                                     )}
                                 </div>
                             )),
                         )}
                     </div>
 
-                    {/* Button to trigger pathfinding */}
-                    {/* <button
-                        className="bg-purple-400 py-2 px-4 rounded-xl text-white font-medium"
-                        onClick={handlePathfinding}
-                    >
-                        Find Path
-                    </button> */}
                     <Button text="Find Path" onClick={handlePathfinding} />
                 </div>
                 <div className="rounded-sm">
@@ -283,9 +268,9 @@ const Maze: React.FC<MazeProps> = () => {
                                                         cell === WALL
                                                             ? '#000'
                                                             : cell === START
-                                                            ? 'green'
+                                                            ? STARTCOLOR
                                                             : cell === EXIT
-                                                            ? 'red'
+                                                            ? EXITCOLOR
                                                             : 'white',
                                                     position: 'relative',
                                                 }}
@@ -293,14 +278,6 @@ const Maze: React.FC<MazeProps> = () => {
                                         )),
                                     )}
                                     <div className="absolute inset-0 w-full h-full bg-black opacity-0 group-hover:opacity-50 flex items-center justify-center rounded">
-                                        {/* <button
-                                            onClick={() =>
-                                                changeMaze(maze.value)
-                                            }
-                                            className="bg-green-300 text-green-900 rounded"
-                                        >
-                                            Choose this maze
-                                        </button> */}
                                         <Button
                                             text="Choose this maze"
                                             onClick={() =>
@@ -314,7 +291,7 @@ const Maze: React.FC<MazeProps> = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
