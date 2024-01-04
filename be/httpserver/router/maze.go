@@ -6,7 +6,9 @@ import (
 )
 
 func NewMazeRouter(h *handler.MazeHandler, gin *gin.Engine) *gin.Engine {
-	maze := gin.Group("mazes")
+	api := gin.Group("api")
+	api.GET("/ping", h.TestServer)
+	maze := gin.Group("api/mazes")
 
 	maze.POST("/finding-path", h.FindPath)
 

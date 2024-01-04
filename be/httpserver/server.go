@@ -7,6 +7,7 @@ import (
 
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/config"
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/httpserver/handler"
+	"github.com/farhanhilmi/go-reactjs-maze-path-finding/httpserver/logger"
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/httpserver/middleware"
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/httpserver/router"
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/usecase"
@@ -18,7 +19,7 @@ func Start(gin *gin.Engine) {
 	configCors := cors.DefaultConfig()
 	configCors.AllowAllOrigins = true
 	// configCors.AddAllowHeaders("authorization")
-
+	gin.Use(middleware.Logger(logger.NewLogger()))
 	gin.Use(middleware.ErrorHandler())
 	gin.Use(cors.New(configCors))
 
