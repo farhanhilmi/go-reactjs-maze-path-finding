@@ -24,9 +24,15 @@ func Start(gin *gin.Engine) {
 	gin.Use(cors.New(configCors))
 
 	mazeUsecase := usecase.NewMazeUsecase()
-	mazeHandler := handler.NewMazeHandler(mazeUsecase)
+	personalUsecase := usecase.NewPersonalUsecase()
 
-	router.NewMazeRouter(mazeHandler, gin)
+	mazeHandler := handler.NewMazeHandler(mazeUsecase)
+	personalHandler := handler.NewPersonalHandler(personalUsecase)
+
+	apiGroup := gin.Group("api")
+
+	router.NewMazeRouter(mazeHandler, gin, apiGroup)
+	router.NewPersonalRouter(personalHandler, gin, apiGroup)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", config.GetEnv("PORT")),
