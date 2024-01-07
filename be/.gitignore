@@ -1,2 +1,6 @@
 .env
 go-be-api-ec2.pem
+*.crt
+*.pem
+*.key
+D62847BA879E8F63BE49F57AED4D4A73.txt

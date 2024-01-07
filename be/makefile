@@ -1,5 +1,5 @@
 aws:
-	ssh -i go-be-api-ec2.pem ec2-user@ec2-3-27-156-140.ap-southeast-2.compute.amazonaws.com
+	ssh -i go-be-api-ec2.pem ec2-user@ec2-13-236-53-232.ap-southeast-2.compute.amazonaws.com
 
 docker-run:
 	docker run -d -p 8080:8080 --name go-be-api go-be-api

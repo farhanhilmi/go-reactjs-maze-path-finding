@@ -21,12 +21,15 @@ WORKDIR /app
 # Copy only the built executable from the build stage
 COPY --from=buildStage /app/main .
 COPY .env /app/.env
+COPY ./contact_me_template.html /app/contact_me_template.html
+COPY ./certificate.crt /app/certificate.crt
+COPY ./private.key /app/private.key
 
 # Set environment variables if needed
 ENV MY_ENV_VARIABLE=value
 
 # Expose port 8080 to the outside world
-EXPOSE 8080
+EXPOSE 443
 
 # Command to run the executable
 CMD ["./main"]

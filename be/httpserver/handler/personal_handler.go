@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -18,11 +19,16 @@ func NewPersonalHandler(personalUsecase usecase.PersonalUsecase) *PersonalHandle
 	return &PersonalHandler{personalUsecase: personalUsecase}
 }
 
+func (h *PersonalHandler) VerifySSL(c *gin.Context) {
+	c.File("/app/D62847BA879E8F63BE49F57AED4D4A73.txt")
+}
+
 func (h *PersonalHandler) MessageMe(c *gin.Context) {
-	var req dto.ContactMeRequest
+	var req dto.ContactMeRequestHTTP
 
 	err := c.ShouldBind(&req)
 	if err != nil {
+		fmt.Println("error:", err)
 		c.Error(util.ErrInvalidInput)
 		return
 	}
