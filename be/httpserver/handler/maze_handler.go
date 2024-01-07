@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/farhanhilmi/go-reactjs-maze-path-finding/dto"
@@ -33,4 +34,9 @@ func (h *MazeHandler) FindPath(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, dto.JSONResponse{Message: "Successfully finding path", Data: path})
+}
+
+func (h *MazeHandler) TestServer(c *gin.Context) {
+	fmt.Println("TEST OK")
+	c.JSON(http.StatusOK, dto.JSONResponse{Message: "pong"})
 }
